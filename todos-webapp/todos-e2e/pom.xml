@@ -8,10 +8,9 @@
   </parent>
   <artifactId>todos-e2e</artifactId>
   <packaging>jar</packaging>
-  <name>Todos Webapp E2E Tests</name>
+  <name>Todos Webapp - E2E Tests</name>
 
   <properties>
-    <skip.e2e.tests>false</skip.e2e.tests>
     <tomcat.zip.file>apache-tomcat-7.0.42.zip</tomcat.zip.file>
     <tomcat.server.port>8080</tomcat.server.port>
     <tomcat.rmi.port>8081</tomcat.rmi.port>

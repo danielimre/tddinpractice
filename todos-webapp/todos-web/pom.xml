@@ -8,7 +8,7 @@
   </parent>
   <artifactId>todos-web</artifactId>
   <packaging>war</packaging>
-  <name>Todos Webapp</name>
+  <name>Todos Webapp - Web</name>
 
   <properties>
   </properties>
@@ -27,6 +27,23 @@
               <directory>${project.basedir}/src/main/webapp</directory>
             </resource>
           </webResources>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.kelveden</groupId>
+        <artifactId>maven-karma-plugin</artifactId>
+        <version>1.3</version>
+
+        <executions>
+          <execution>
+            <goals> 
+              <goal>start</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <configFile>${project.basedir}/src/test/js/conf-ci.js</configFile>
+          <skipTests>${skip.js.unit.tests}</skipTests>
         </configuration>
       </plugin>
     </plugins>

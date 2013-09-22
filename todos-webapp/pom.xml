@@ -10,6 +10,7 @@
   <description>Todos Webapp main project</description>
 
   <modules>
+    <module>todos-core</module>
     <module>todos-web</module>
     <module>todos-e2e</module>
   </modules>
@@ -17,6 +18,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <skip.unit.tests>false</skip.unit.tests>
+    <skip.js.unit.tests>false</skip.js.unit.tests>
+    <skip.e2e.tests>false</skip.e2e.tests>
     <junit.version>4.11</junit.version>
     <jdk.version>1.7</jdk.version>
   </properties>
@@ -49,6 +52,11 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>com.company.todosapp</groupId>
+        <artifactId>todos-core</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <dependency>
         <groupId>com.company.todosapp</groupId>
         <artifactId>todos-web</artifactId>

@@ -11,6 +11,7 @@
   <name>Todos Webapp - Web</name>
 
   <properties>
+    <main.basedir>${project.parent.basedir}</main.basedir>
   </properties>
 
   <build>
@@ -42,7 +43,7 @@
           </execution>
         </executions>
         <configuration>
-          <configFile>${project.basedir}/src/test/js/conf-ci.js</configFile>
+          <configFile>${project.basedir}/src/test/scripts/js/conf-ci.js</configFile>
           <skipTests>${skip.js.unit.tests}</skipTests>
         </configuration>
       </plugin>

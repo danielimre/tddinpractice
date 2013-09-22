@@ -8,6 +8,10 @@ Karma
 - needs CHROME_BIN
 - PhantomJS node karma bug - won't exit in ci mode
 - dev mode: karma start todos-web\src\test\scripts\js\conf-dev.js
+- add to build: automatically install karma and karma-coverage if absent
 
 E2E
 mvn verify -P e2e
+
+Build
+- fix some file encoding warnings

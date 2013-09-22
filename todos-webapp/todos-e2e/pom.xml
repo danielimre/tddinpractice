@@ -11,6 +11,7 @@
   <name>Todos Webapp - E2E Tests</name>
 
   <properties>
+    <main.basedir>${project.parent.basedir}</main.basedir>
     <tomcat.zip.file>apache-tomcat-7.0.42.zip</tomcat.zip.file>
     <tomcat.server.port>8080</tomcat.server.port>
     <tomcat.rmi.port>8081</tomcat.rmi.port>

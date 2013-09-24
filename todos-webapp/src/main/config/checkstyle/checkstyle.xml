@@ -4,7 +4,8 @@
           "http://www.puppycrawl.com/dtds/configuration_1_3.dtd">
 
 <!--
-
+  Slightly modified version of sun_checks.xml!
+  
   Checkstyle configuration that checks the sun coding conventions from:
 
     - the Java Language Specification at
@@ -77,9 +78,9 @@
         <!-- See http://checkstyle.sf.net/config_javadoc.html -->
         <module name="JavadocMethod">
             <property name="severity" value="warning"/>
+            <property name="scope" value="protected" />
         </module>
         <module name="JavadocType"/>
-        <module name="JavadocVariable"/>
         <module name="JavadocStyle"/>
 
 
@@ -106,7 +107,9 @@
 
         <!-- Checks for Size Violations.                    -->
         <!-- See http://checkstyle.sf.net/config_sizes.html -->
-        <module name="LineLength"/>
+        <module name="LineLength">
+            <property name="max" value="160"/>
+        </module>
         <module name="MethodLength"/>
         <module name="ParameterNumber"/>
 
@@ -146,7 +149,7 @@
         <!--<module name="DoubleCheckedLocking"/>-->
         <module name="EmptyStatement"/>
         <module name="EqualsHashCode"/>
-        <module name="HiddenField"/>
+        <!--<module name="HiddenField"/>-->
         <module name="IllegalInstantiation"/>
         <module name="InnerAssignment"/>
         <module name="MagicNumber">

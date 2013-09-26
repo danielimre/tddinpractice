@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.company.todosapp</groupId>
@@ -16,7 +15,9 @@
     <tomcat.server.port>8080</tomcat.server.port>
     <tomcat.rmi.port>8081</tomcat.rmi.port>
     <tomcat.ajp.port>8091</tomcat.ajp.port>
-    <selenium.version>2.35.0</selenium.version>
+    <thucydides.version>0.9.205</thucydides.version>
+    <thucydides.jbehave.version>0.9.205</thucydides.jbehave.version>
+    <webdriver.driver>firefox</webdriver.driver>
   </properties>
 
   <build>
@@ -87,37 +88,14 @@
         </executions>
       </plugin>
       <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>selenium-maven-plugin</artifactId>
-        <version>2.3</version>
-        <executions>
-          <execution>
-            <id>start-selenium</id>
-            <phase>pre-integration-test</phase>
-            <goals>
-              <goal>start-server</goal>
-            </goals>
-            <configuration>
-              <background>true</background>
-              <skip>${skip.e2e.tests}</skip>
-            </configuration>
-          </execution>
-          <execution>
-            <id>stop-selenium</id>
-            <phase>post-integration-test</phase>
-            <goals>
-              <goal>stop-server</goal>
-            </goals>
-            <configuration>
-              <skip>${skip.e2e.tests}</skip>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-failsafe-plugin</artifactId>
         <version>2.16</version>
+        <configuration>
+          <includes>
+            <include>**/*TestSuite.java</include>
+          </includes>
+        </configuration>
         <executions>
           <execution>
             <id>integration-test</id>
@@ -131,6 +109,34 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>net.thucydides.maven.plugins</groupId>
+        <artifactId>maven-thucydides-plugin</artifactId>
+        <version>${thucydides.version}</version>
+        <executions>
+          <execution>
+            <id>thucydides-reports</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>aggregate</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.2</version>
+        <configuration>
+          <reportPlugins>
+            <plugin>
+              <groupId>net.thucydides.maven.plugins</groupId>
+              <artifactId>maven-thucydides-plugin</artifactId>
+              <version>${thucydides.version}</version>
+            </plugin>
+          </reportPlugins>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 
@@ -142,21 +148,40 @@
       <type>war</type>
     </dependency>
     <dependency>
+      <groupId>net.thucydides</groupId>
+      <artifactId>thucydides-core</artifactId>
+      <version>${thucydides.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>net.thucydides</groupId>
+      <artifactId>thucydides-junit</artifactId>
+      <version>${thucydides.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>net.thucydides</groupId>
+      <artifactId>thucydides-jbehave-plugin</artifactId>
+      <version>${thucydides.jbehave.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>1.6.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.easytesting</groupId>
+      <artifactId>fest-assert</artifactId>
+      <version>1.4</version>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
+      <version>4.11</version>
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-java</artifactId>
-      <scope>test</scope>
-      <version>${selenium.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.seleniumhq.selenium</groupId>
-      <artifactId>selenium-server</artifactId>
-      <scope>test</scope>
-      <version>${selenium.version}</version>
+      <groupId>com.googlecode.lambdaj</groupId>
+      <artifactId>lambdaj</artifactId>
+      <version>2.3.3</version>
     </dependency>
   </dependencies>
 

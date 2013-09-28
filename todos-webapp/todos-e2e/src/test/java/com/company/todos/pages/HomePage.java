@@ -3,13 +3,13 @@ package com.company.todos.pages;
 import net.thucydides.core.annotations.DefaultUrl;
 import net.thucydides.core.pages.PageObject;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 /**
  * Page object for the home page.
+ *
  * @author Daniel Imre
  *
  */
@@ -18,8 +18,12 @@ public class HomePage extends PageObject {
     @FindBy(linkText = "todos")
     private WebElement todosLink;
 
+    @FindBy(id = "username")
+    private WebElement usernameInput;
+
     /**
      * Constructs a homepage object.
+     *
      * @param driver the driver to use
      */
     public HomePage(WebDriver driver) {
@@ -27,17 +31,18 @@ public class HomePage extends PageObject {
     }
 
     /**
-     * Gets the main title of the page.
-     * @return the main title
+     * Clicks the link which posts the login form and leads to the todos page.
      */
-    public String mainTitle() {
-        return element(By.cssSelector("header h1")).getText();
+    public void clickTodosButton() {
+        $(todosLink).click();
     }
 
     /**
-     * Click the link which leads to the todos page.
+     * Enters username into username field clearing first.
+     *
+     * @param username the username to enter
      */
-    public void clickTodosLink() {
-        todosLink.click();
+    public void enterUsername(String username) {
+        $(usernameInput).type(username);
     }
 }

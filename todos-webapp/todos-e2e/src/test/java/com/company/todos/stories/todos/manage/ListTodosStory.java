@@ -1,4 +1,4 @@
-package com.company.todos.stories;
+package com.company.todos.stories.todos.manage;
 
 import net.thucydides.core.annotations.Steps;
 
@@ -9,7 +9,8 @@ import org.jbehave.core.annotations.When;
 import com.company.todos.steps.UserSteps;
 
 /**
- * BDD scenario.
+ * Scenario for user logging in for the first time.
+ *
  * @author Daniel Imre
  *
  */
@@ -22,9 +23,9 @@ public class ListTodosStory {
         user.isOnTheHomePage();
     }
 
-    @When("the user clicks the todos link")
-    public void whenTheUserClicksTodosLink() {
-        user.clicksTodosLink();
+    @When("the user logs in with '$username'")
+    public void whenTheUserLogsInWith(String username) {
+        user.logsInWith(username);
     }
 
     @Then("they should see empty todos list")

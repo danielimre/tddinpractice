@@ -26,41 +26,43 @@
         <groupId>org.codehaus.cargo</groupId>
         <artifactId>cargo-maven2-plugin</artifactId>
         <version>1.4.4</version>
+        <configuration>
+          <container>
+            <containerId>tomcat7x</containerId>
+            <zipUrlInstaller>
+              <url>file:resources/${tomcat.zip.file}</url>
+              <downloadDir>${project.basedir}/resources</downloadDir>
+              <extractDir>${project.build.directory}/extracts</extractDir>
+            </zipUrlInstaller>
+            <systemProperties>
+            </systemProperties>
+            <log>${project.build.directory}/todos_app.log</log>
+          </container>
+          <configuration>
+            <properties>
+              <cargo.servlet.port>${tomcat.server.port}</cargo.servlet.port>
+              <cargo.tomcat.ajp.port>${tomcat.ajp.port}</cargo.tomcat.ajp.port>
+              <cargo.rmi.port>${tomcat.rmi.port}</cargo.rmi.port>
+            </properties>
+            <home>${project.build.directory}/tomcat_todos_app</home>
+          </configuration>
+          <deployables>
+            <deployable>
+              <groupId>com.company.todosapp</groupId>
+              <artifactId>todos-web</artifactId>
+              <type>war</type>
+              <properties>
+                <context>ROOT</context>
+              </properties>
+            </deployable>
+          </deployables>
+        </configuration>
         <executions>
           <execution>
             <id>start-todos-app</id>
             <phase>pre-integration-test</phase>
             <configuration>
               <skip>${skip.e2e.tests}</skip>
-              <container>
-                <containerId>tomcat7x</containerId>
-                <zipUrlInstaller>
-                  <url>file:resources/${tomcat.zip.file}</url>
-                  <downloadDir>${project.basedir}/resources</downloadDir>
-                  <extractDir>${project.build.directory}/extracts</extractDir>
-                </zipUrlInstaller>
-                <systemProperties>
-                </systemProperties>
-                <log>${project.build.directory}/todos_app.log</log>
-              </container>
-              <configuration>
-                <properties>
-                  <cargo.servlet.port>${tomcat.server.port}</cargo.servlet.port>
-                  <cargo.tomcat.ajp.port>${tomcat.ajp.port}</cargo.tomcat.ajp.port>
-                  <cargo.rmi.port>${tomcat.rmi.port}</cargo.rmi.port>
-                </properties>
-                <home>${project.build.directory}/tomcat_todos_app</home>
-              </configuration>
-              <deployables>
-                <deployable>
-                  <groupId>com.company.todosapp</groupId>
-                  <artifactId>todos-web</artifactId>
-                  <type>war</type>
-                  <properties>
-                    <context>ROOT</context>
-                  </properties>
-                </deployable>
-              </deployables>
             </configuration>
             <goals>
               <goal>start</goal>
@@ -71,15 +73,6 @@
             <phase>verify</phase>
             <configuration>
               <skip>${skip.e2e.tests}</skip>
-              <container>
-                <containerId>tomcat7x</containerId>
-              </container>
-              <configuration>
-                <properties>
-                  <cargo.servlet.port>${tomcat.server.port}</cargo.servlet.port>
-                </properties>
-                <home>${project.build.directory}/tomcat_todos_app</home>
-              </configuration>
             </configuration>
             <goals>
               <goal>stop</goal>

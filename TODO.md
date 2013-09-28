@@ -15,3 +15,7 @@ mvn verify -P e2e
 
 Build
 - fix some file encoding warnings
+
+Notes
+Thucydides
+- when checking non-existense of elements move parent element to member with FindBy annotation. this asserts that the parent does exist

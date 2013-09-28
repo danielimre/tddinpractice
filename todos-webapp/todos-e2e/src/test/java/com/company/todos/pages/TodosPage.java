@@ -5,6 +5,8 @@ import net.thucydides.core.pages.PageObject;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 /**
  * Page object for the todos page.
@@ -13,6 +15,8 @@ import org.openqa.selenium.WebDriver;
  */
 @DefaultUrl("http://localhost:8080/todos")
 public class TodosPage extends PageObject {
+    @FindBy(id = "todos-list")
+    private WebElement todosList;
 
     /**
      * Constructs a todos page object.
@@ -36,5 +40,13 @@ public class TodosPage extends PageObject {
      */
     public boolean isFooterVisible() {
         return element(By.id("footer")).isDisplayed();
+    }
+
+    /**
+     * Returns true if the todos list is empty.
+     * @return true if empty, otherwise false
+     */
+    public boolean isTodosListEmpty() {
+        return todosList.findElements(By.tagName("li")).size() == 0;
     }
 }

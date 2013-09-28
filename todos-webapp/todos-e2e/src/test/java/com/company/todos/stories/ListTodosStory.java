@@ -24,7 +24,12 @@ public class ListTodosStory {
 
     @When("the user clicks the todos link")
     public void whenTheUserClicksTodosLink() {
-        user.clicksTodosLinkAndEntersTodosPage();
+        user.clicksTodosLink();
+    }
+
+    @Then("they should see empty todos list")
+    public void thenTheyShouldSeeEmptyTodosList() {
+        user.shouldSeeEmptyTodosList();
     }
 
     @Then("they should not see the footer")

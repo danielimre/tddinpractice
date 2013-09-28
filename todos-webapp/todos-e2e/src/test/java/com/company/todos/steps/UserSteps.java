@@ -1,6 +1,7 @@
 package com.company.todos.steps;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.pages.Pages;
 import net.thucydides.core.steps.ScenarioSteps;
@@ -22,9 +23,8 @@ public class UserSteps extends ScenarioSteps {
     }
 
     @Step
-    public void clicksTodosLinkAndEntersTodosPage() {
+    public void clicksTodosLink() {
         homePage.clickTodosLink();
-        todosPage.open();
     }
 
     @Step
@@ -35,5 +35,10 @@ public class UserSteps extends ScenarioSteps {
     @Step
     public void isOnTheHomePage() {
         homePage.open();
+    }
+
+    @Step
+    public void shouldSeeEmptyTodosList() {
+        assertTrue(todosPage.isTodosListEmpty());
     }
 }

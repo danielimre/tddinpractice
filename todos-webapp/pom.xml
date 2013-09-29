@@ -22,6 +22,7 @@
     <skip.e2e.tests>true</skip.e2e.tests>
     <skip.checkstyle>false</skip.checkstyle>
     <jdk.version>1.7</jdk.version>
+    <spring.version>3.2.4.RELEASE</spring.version>
   </properties>
 
   <profiles>
@@ -89,7 +90,7 @@
 
   <reporting>
     <plugins>
-        <plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
         <version>2.7</version>
@@ -135,9 +136,30 @@
         <version>${project.version}</version>
       </dependency>
       <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-core</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-web</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-webmvc</artifactId>
+        <version>${spring.version}</version>
+      </dependency>
+      <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
         <version>4.11</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>1.9.5</version>
         <scope>test</scope>
       </dependency>
     </dependencies>

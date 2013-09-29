@@ -1,5 +1,6 @@
 package com.company.todos.steps;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.isEmptyString;
@@ -80,5 +81,10 @@ public class UserSteps extends ScenarioSteps {
     @Step
     public void shouldSeeFooterWithStatus(String statusText) {
         assertThat(todosPage.getStatusText(), equalTo(statusText));
+    }
+
+    @Step
+    public void shouldSeeTextInHeader(String text) {
+        assertThat(todosPage.getHeaderText(), containsString(text));
     }
 }

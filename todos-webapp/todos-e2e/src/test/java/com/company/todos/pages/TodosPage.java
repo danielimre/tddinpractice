@@ -37,6 +37,9 @@ public class TodosPage extends PageObject {
     @FindBy(id = "todo-count")
     private WebElement status;
 
+    @FindBy(css = "#header h1")
+    private WebElement headerTitle;
+
     /**
      * Constructs a todos page object.
      *
@@ -109,6 +112,14 @@ public class TodosPage extends PageObject {
      */
     public String getStatusText() {
         return $(status).getText();
+    }
+
+    /**
+     * Gets the text in the header title.
+     * @return the title text
+     */
+    public String getHeaderText() {
+        return $(headerTitle).getText();
     }
 
     private List<WebElement> getTodosInList() {

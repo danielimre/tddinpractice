@@ -15,7 +15,7 @@ import org.openqa.selenium.support.FindBy;
  */
 @DefaultUrl("http://localhost:8080/")
 public class HomePage extends PageObject {
-    @FindBy(linkText = "todos")
+    @FindBy(id = "todos")
     private WebElement todosLink;
 
     @FindBy(id = "username")

@@ -28,6 +28,11 @@ public class ListTodosStory {
         user.logsInWith(username);
     }
 
+    @Then("they should see their username ($text) in header")
+    public void theyShouldSeeTheirUsernameInHeader(String text) {
+        user.shouldSeeTextInHeader(text);
+    }
+
     @Then("they should see empty todos list")
     public void thenTheyShouldSeeEmptyTodosList() {
         user.shouldSeeEmptyTodosList();

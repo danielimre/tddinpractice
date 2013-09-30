@@ -14,13 +14,15 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'main/webapp/js/**/*.js',
+      'test/js/lib/angular/angular.js',
+      'test/js/lib/angular/angular-mocks.js',
+      'main/js/**/*.js',
       'test/js/**/*Spec.js'
     ],
 
     // list of files to exclude
     exclude: [
-
+      'main/js/**/app.js'
     ],
 
     preprocessors: {

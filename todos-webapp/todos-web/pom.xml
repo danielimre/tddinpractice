@@ -41,6 +41,18 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>jslint-maven-plugin</artifactId>
+        <version>1.0.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>jslint</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <version>2.4</version>
@@ -50,6 +62,10 @@
           <webResources>
             <resource>
               <directory>${project.basedir}/src/main/webapp</directory>
+            </resource>
+            <resource>
+              <directory>${project.basedir}/src/main/js</directory>
+              <targetPath>assets/js</targetPath>
             </resource>
           </webResources>
         </configuration>

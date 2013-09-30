@@ -5,23 +5,26 @@ module.exports = function(config) {
   config.set({
 
     // base path, that will be used to resolve files and exclude
-    basePath: '../..',
+    basePath: '../../..',
 
 
     // frameworks to use
+//    frameworks: ['jasmine', 'ng-scenario'],
     frameworks: ['jasmine'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      'main/webapp/js/**/*.js',
+      'test/js/lib/angular/angular.js',
+      'test/js/lib/angular/angular-mocks.js',
+      'main/js/**/*.js',
       'test/js/**/*Spec.js'
     ],
 
 
     // list of files to exclude
     exclude: [
-      
+       'main/js/**/app.js'
     ],
 
 
@@ -55,7 +58,7 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['PhantomJS'],
+    browsers: ['Chrome'],
 
 
     // If browser does not capture in given timeout [ms], kill it

@@ -34,7 +34,7 @@ public class TodosPage extends PageObject {
     @FindBy(id = "new-todo")
     private WebElement newTodoField;
 
-    @FindBy(id = "todo-count")
+    @FindBy(id = "todos-count")
     private WebElement status;
 
     @FindBy(css = "#header h1")

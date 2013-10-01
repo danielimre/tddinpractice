@@ -48,4 +48,9 @@ public class AddTodoStory {
     public void theyShouldSeeTheFooterWithStatus(String statusText) {
         user.shouldSeeFooterWithStatus(statusText);
     }
+
+    @Then("they should see $numberOfTodos todo in the list")
+    public void theyShouldSeeXTodoInTheList(Integer numberOfTodos) {
+        user.shouldSeeXTodosInTheList(numberOfTodos);
+    }
 }

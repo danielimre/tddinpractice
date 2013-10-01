@@ -79,7 +79,7 @@ public class TodosPage extends PageObject {
      *
      * @return collection of todo texts
      */
-    public Iterable<? super String> getTodoTexts() {
+    public List<String> getTodoTexts() {
         return extract(getTodosInList(), on(WebElement.class).getText());
     }
 
@@ -99,7 +99,7 @@ public class TodosPage extends PageObject {
      * @return true if the todo is complete, otherwise false
      */
     public boolean isTodoMarkedComplete(final String todoTextAdded) {
-        return $(getTodoWithText(todoTextAdded).findElement(By.tagName("input"))).isSelected();
+        return $(getTodoWithText(todoTextAdded).findElement(By.cssSelector("input[type=checkbox]"))).isSelected();
     }
 
     /**
@@ -113,10 +113,20 @@ public class TodosPage extends PageObject {
 
     /**
      * Gets the text in the header title.
+     *
      * @return the title text
      */
     public String getHeaderText() {
         return $(headerTitle).getText();
+    }
+
+    /**
+     * Clicks the state checkbox of a todo by its ordinal number.
+     *
+     * @param todoNumber the todo's ordinal number
+     */
+    public void clickStateCheckbox(Integer todoNumber) {
+        getTodosInList().get(todoNumber - 1).findElement(By.cssSelector("input[type=checkbox]")).click();
     }
 
     private List<WebElement> getTodosInList() {

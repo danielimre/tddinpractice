@@ -87,4 +87,14 @@ public class UserSteps extends ScenarioSteps {
     public void shouldSeeTextInHeader(String text) {
         assertThat(todosPage.getHeaderText(), containsString(text));
     }
+
+    @Step
+    public void shouldSeeXTodosInTheList(Integer expectedNumberOfTodos) {
+        assertThat(todosPage.getTodoTexts().size(), equalTo(expectedNumberOfTodos));
+    }
+
+    @Step
+    public void clicksStateCheckBox(Integer todoNumber) {
+        todosPage.clickStateCheckbox(todoNumber);
+    }
 }

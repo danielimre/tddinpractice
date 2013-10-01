@@ -5,6 +5,7 @@
 function TodosCtrl($scope) {
     $scope.todos = [];
     $scope.newTodo = '';
+    $scope.remainingCount = 0;
 
     $scope.addTodo = function () {
         var newTodo = $scope.newTodo.trim();
@@ -15,6 +16,11 @@ function TodosCtrl($scope) {
             title: newTodo,
             completed: false
         });
+        $scope.remainingCount++;
         $scope.newTodo = '';
+    };
+
+    $scope.todoCompleted = function (todo) {
+        $scope.remainingCount += todo.completed ? -1 : 1;
     };
 }

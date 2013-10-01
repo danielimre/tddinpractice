@@ -18,14 +18,14 @@
     <section id="main">
       <ul id="todos-list">
         <li ng-repeat="todo in todos">
-          <input type="checkbox" ng-model="todo.completed">
+          <input type="checkbox" ng-model="todo.completed" ng-change="todoCompleted(todo)">
           {{todo.title}}
         </li>
       </ul>
     </section>
     <footer id="footer" ng-show="todos.length">
       <span id="todos-count">
-        {{todos.length}} <ng-pluralize count="todos.length" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
+        {{remainingCount}} <ng-pluralize count="todos.length" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
       </span>
     </footer>
   </section>

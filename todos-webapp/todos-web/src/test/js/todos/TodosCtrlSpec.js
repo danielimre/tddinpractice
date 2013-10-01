@@ -11,7 +11,7 @@ describe("TodosCtrl", function() {
         $scope.newTodo = "some";
         $scope.addTodo();
         it("should add newTodo to todos", function() {
-            expect($scope.todos).toEqual([{title : "some"}]);
+            expect($scope.todos).toEqual([{title : "some", completed: false}]);
         });
         it("should clear newTodo", function() {
             expect($scope.newTodo).toEqual("");

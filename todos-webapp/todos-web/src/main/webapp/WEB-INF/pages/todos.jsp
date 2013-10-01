@@ -8,17 +8,17 @@
 </style>
 </head>
 <body>
-  <section ng-controller="TodosCtrl">
+  <section ng-controller="TodosCtrl" ng-cloak>
     <header id="header">
       <h1>todos @${username}</h1>
       <form id="todo-form" ng-submit="addTodo()">
-        <input id="new-todo" ng-model="newTodo" autofocus >
+        <input id="new-todo" ng-model="newTodo" autofocus>
       </form>
     </header>
-    <section ng-show="todos.length" ng-cloak>
+    <section id="main">
       <ul id="todos-list">
         <li ng-repeat="todo in todos">
-          <input class="toggle" type="checkbox" ng-model="todo.completed">
+          <input type="checkbox" ng-model="todo.completed">
           {{todo.title}}
         </li>
       </ul>

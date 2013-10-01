@@ -28,9 +28,6 @@ public class TodosPage extends PageObject {
     @FindBy(id = "todos-list")
     private WebElement todosList;
 
-    @FindBy(id = "footer")
-    private WebElement footer;
-
     @FindBy(id = "new-todo")
     private WebElement newTodoField;
 
@@ -55,7 +52,7 @@ public class TodosPage extends PageObject {
      * @return true if the footer visible, otherwise false
      */
     public boolean isFooterVisible() {
-        return footer.isDisplayed();
+        return getDriver().findElement(By.id("footer")).isDisplayed();
     }
 
     /**

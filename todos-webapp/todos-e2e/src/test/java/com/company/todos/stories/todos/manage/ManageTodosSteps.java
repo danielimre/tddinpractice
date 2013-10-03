@@ -2,9 +2,11 @@ package com.company.todos.stories.todos.manage;
 
 import net.thucydides.core.annotations.Steps;
 
+import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 
+import com.company.todos.steps.ContextSetupSteps;
 import com.company.todos.steps.UserSteps;
 
 /**
@@ -13,9 +15,16 @@ import com.company.todos.steps.UserSteps;
  * @author Daniel Imre
  *
  */
-public class AddTodoStory {
+public class ManageTodosSteps {
     @Steps
     private UserSteps user;
+    @Steps
+    private ContextSetupSteps contextSetup;
+
+    @Given("there are no stored todos for '$userName'")
+    public void thereAreNoStoredTodosFor(String userName) {
+        contextSetup.clearTodosFor(userName);
+    }
 
     @When("the user enters '$todoText' to new todo input field and hits Enter")
     public void theUserEntersTodoText(String todoText) {
@@ -45,5 +54,20 @@ public class AddTodoStory {
     @Then("they should see $numberOfTodos todo in the list")
     public void theyShouldSeeXTodoInTheList(Integer numberOfTodos) {
         user.shouldSeeXTodosInTheList(numberOfTodos);
+    }
+
+    @Then("they should see their username ($text) in header")
+    public void theyShouldSeeTheirUsernameInHeader(String text) {
+        user.shouldSeeTextInHeader(text);
+    }
+
+    @Then("they should see empty todos list")
+    public void thenTheyShouldSeeEmptyTodosList() {
+        user.shouldSeeEmptyTodosList();
+    }
+
+    @Then("they should not see the footer")
+    public void thenTheyShouldNotSeeTheFooter() {
+        user.shouldNotSeeFooter();
     }
 }

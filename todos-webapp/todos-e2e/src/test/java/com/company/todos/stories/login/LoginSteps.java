@@ -1,4 +1,4 @@
-package com.company.todos.stories.todos.manage;
+package com.company.todos.stories.login;
 
 import net.thucydides.core.annotations.Steps;
 

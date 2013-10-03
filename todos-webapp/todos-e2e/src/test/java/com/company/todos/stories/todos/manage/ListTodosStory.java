@@ -2,9 +2,7 @@ package com.company.todos.stories.todos.manage;
 
 import net.thucydides.core.annotations.Steps;
 
-import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
-import org.jbehave.core.annotations.When;
 
 import com.company.todos.steps.UserSteps;
 
@@ -17,16 +15,6 @@ import com.company.todos.steps.UserSteps;
 public class ListTodosStory {
     @Steps
     private UserSteps user;
-
-    @Given("the user is on the home page")
-    public void givenTheUserIsOnTheHomePage() {
-        user.isOnTheHomePage();
-    }
-
-    @When("the user logs in with '$username'")
-    public void whenTheUserLogsInWith(String username) {
-        user.logsInWith(username);
-    }
 
     @Then("they should see their username ($text) in header")
     public void theyShouldSeeTheirUsernameInHeader(String text) {

@@ -1,58 +1,74 @@
 (function() {
-    function initScope() {
-        var $scope = {},
-            ctrl = new TodosCtrl($scope);
-        return $scope;
-    }
+    describe('TodosCtrl', function() {
+        var createController, $scope, $httpBackend,
+            INITIAL_TODO_LIST = [{id: 1, title: 'todo1'}, {id: 2, title: 'todo2'}];
 
-    describe("TodosCtrl", function() {
-        var $scope = initScope();
-        it("should initialize $scope", function() {
-            expect($scope.newTodo).toEqual("");
-            expect($scope.todos).toEqual([]);
-            expect($scope.remainingCount).toEqual(0);
-        });
-    });
-    describe("TodosCtrl.addTodo()", function() {
-        describe("invoked with non-empty newTodo", function() {
-            var $scope = initScope();
-            it("invoked with non-empty newTodo should add it to todos", function() {
-                $scope.newTodo = "some";
-                $scope.addTodo();
-                expect($scope.todos).toEqual([{title : "some", completed: false}]);
-            });
-            it("should clear newTodo", function() {
-                expect($scope.newTodo).toEqual("");
-            });
-            it("should increase remainingCount by 1", function() {
-                expect($scope.remainingCount).toEqual(1);
+        beforeEach(module('todosApp'));
+        beforeEach(inject(function($controller, $rootScope, $injector) {
+            $scope = $rootScope.$new();
+            $httpBackend = $injector.get('$httpBackend'); //got through the $injector to avoid name collision
+            createController = function () {
+                return $controller('TodosCtrl', {$scope: $scope});
+            }
+        }));
+        beforeEach(function() {
+            this.addMatchers({
+                toEqualData: function(expected) {
+                    return angular.equals(this.actual, expected);
+                }
             });
         });
-        describe("invoked with empty newTodo", function() {
-            var $scope = initScope();
-            it("shouldn't add newTodo to todos", function() {
-                $scope.newTodo = "  ";
-                $scope.addTodo();
-                expect($scope.todos).toEqual([]);
-            });
+
+        afterEach(function() {
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();
         });
-    });
-    describe("TodosCtrl.todoCompleted()", function() {
-        describe("invoked with an incomplete todo", function() {
-            var $scope = initScope();
-            $scope.remainingCount = 0;
-            $scope.todoCompleted({completed: false});
-            it("should increase remainingCount by one", function() {
-                expect($scope.remainingCount).toEqual(1);
+
+        it('should query todos', inject(function($httpBackend) {
+            var ctrl;
+            $httpBackend.expectGET('/api/todo').respond(INITIAL_TODO_LIST);
+            ctrl = createController();
+            $httpBackend.flush();
+            expect($scope.todos).toEqualData(INITIAL_TODO_LIST);
+        }));
+
+        describe('TodosCtrl.addTodo()', function() {
+            var ctrl;
+            beforeEach(function () {
+                $httpBackend.expectGET('/api/todo').respond(INITIAL_TODO_LIST);
+                ctrl = createController();
+                $httpBackend.flush();
             });
-        });
-        describe("invoked with a complete todo", function() {
-            var $scope = initScope();
-            it("should decrease remainingCount by one", function() {
-                $scope.remainingCount = 1;
-                $scope.todoCompleted({completed: true});
-                expect($scope.remainingCount).toEqual(0);
+
+            describe("invoked with non-empty newTodo", function() {
+                var NEW_ITEM = {id: 8, title: "some"};
+
+                beforeEach(function () {
+                    $scope.newTodo = "some";
+                    $httpBackend.expectPOST('/api/todo', {title: "some"}).respond(NEW_ITEM);
+                    $scope.addTodo();
+                    $httpBackend.flush();
+                });
+
+                it("should add it to todos", function() {
+                    var expectedItems = [NEW_ITEM];
+                    Array.prototype.push.apply(expectedItems, INITIAL_TODO_LIST);
+                    expect($scope.todos).toEqualData(expectedItems);
+                });
+                it("should clear newTodo", function() {
+                    expect($scope.newTodo).toEqual("");
+                });
+                it("should increase remainingCount by 1", function() {
+                    expect($scope.remainingCount).toEqual(3);
+                });
             });
-        });
+            describe("invoked with empty newTodo", function() {
+                it("shouldn't add newTodo to todos", function() {
+                    $scope.newTodo = "  ";
+                    $scope.addTodo();
+                    expect($scope.todos).toEqualData(INITIAL_TODO_LIST);
+                });
+            });
+        })
     });
 })();

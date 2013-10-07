@@ -33,11 +33,9 @@
     <property name="sessionFactory" ref="sessionFactory" />
   </bean>
   <tx:annotation-driven />
-  
   <bean id="todoDao" class="com.company.todos.dao.HibernateTodoDao">
     <property name="sessionFactory" ref="sessionFactory" />
   </bean>
-  
   <bean id="todoService" class="com.company.todos.service.TodoServiceImpl">
     <property name="todoDao" ref="todoDao" />
   </bean>

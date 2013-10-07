@@ -19,6 +19,7 @@ public class Todo {
 
     private Long id;
     private String title;
+    private boolean completed;
 
     @Id
     @GeneratedValue
@@ -39,9 +40,22 @@ public class Todo {
         this.title = title;
     }
 
+    @Column
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
     @Override
     public String toString() {
-        return Objects.toStringHelper(this).omitNullValues().add("id", id).add("title", title).toString();
+        return Objects.toStringHelper(this).omitNullValues()
+                .add("id", id)
+                .add("title", title)
+                .add("completed", completed)
+                .toString();
     }
 
     // Generated code begins here
@@ -51,6 +65,7 @@ public class Todo {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
+        result = prime * result + (completed ? 1231 : 1237);
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((title == null) ? 0 : title.hashCode());
         return result;
@@ -69,6 +84,9 @@ public class Todo {
             return false;
         }
         Todo other = (Todo) obj;
+        if (completed != other.completed) {
+            return false;
+        }
         if (id == null) {
             if (other.id != null) {
                 return false;

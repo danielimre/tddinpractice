@@ -23,4 +23,9 @@ public interface TodoDao {
      * @param todo todo entry to save
      */
     void save(Todo todo);
+
+    /**
+     * Removes all todos.
+     */
+    void removeAll();
 }

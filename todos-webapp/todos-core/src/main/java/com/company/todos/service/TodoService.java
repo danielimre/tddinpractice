@@ -22,4 +22,9 @@ public interface TodoService {
      * @param todo entry to save
      */
     void save(Todo todo);
+
+    /**
+     * Removes all todos.
+     */
+    void removeAll();
 }

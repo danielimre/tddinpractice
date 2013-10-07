@@ -53,6 +53,12 @@ public class TodoServiceImplTest {
         verify(todoDao).save(Mockito.eq(todo));
     }
 
+    @Test
+    public void shouldRemoveAllTodos() {
+        todoServiceImpl.removeAll();
+        verify(todoDao).removeAll();
+    }
+
     private static Todo todo(Long id, String title) {
         Todo todo = new Todo();
         todo.setId(id);

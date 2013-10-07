@@ -29,6 +29,11 @@ public class HibernateTodoDao implements TodoDao {
         sessionFactory.getCurrentSession().saveOrUpdate(todo);
     }
 
+    @Override
+    public void removeAll() {
+        sessionFactory.getCurrentSession().createQuery("delete from Todo").executeUpdate();
+    }
+
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }

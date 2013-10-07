@@ -28,6 +28,12 @@ public class TodoServiceImpl implements TodoService {
         todoDao.save(todo);
     }
 
+    @Override
+    @Transactional
+    public void removeAll() {
+        todoDao.removeAll();
+    }
+
     public void setTodoDao(TodoDao todoDao) {
         this.todoDao = todoDao;
     }

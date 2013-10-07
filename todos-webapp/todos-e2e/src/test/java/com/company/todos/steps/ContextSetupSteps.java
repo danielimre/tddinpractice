@@ -1,13 +1,22 @@
 package com.company.todos.steps;
 
 import net.thucydides.core.annotations.Step;
+import net.thucydides.core.pages.Pages;
+import net.thucydides.core.steps.ScenarioSteps;
+
+import com.company.todos.pages.AdminPage;
 
 /**
  * Steps for preparing test contexts.
  * @author Daniel Imre
  *
  */
-public class ContextSetupSteps {
+public class ContextSetupSteps extends ScenarioSteps {
+    private AdminPage adminPage;
+
+    public ContextSetupSteps(Pages pages) {
+        super(pages);
+    }
 
     /**
      * Calls backend directly to clear up todos for a specific user.
@@ -15,7 +24,7 @@ public class ContextSetupSteps {
      */
     @Step
     public void clearTodosFor(String userName) {
-        //TODO: add call to backend
+        adminPage.purgeTodosFor(userName);
     }
 
 }

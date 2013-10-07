@@ -21,12 +21,17 @@ function TodosCtrl($scope, Todo) {
 
     $scope.addTodo = function () {
         var newTodo = new Todo({title: $scope.newTodo.trim()});
-        if (newTodo.title.length === 0) {
+        if (!newTodo.title) {
             return;
         }
-        newTodo.$save(updateRemainingCount);
+        newTodo.$save();
         $scope.todos.unshift(newTodo);
-        updateRemainingCount();
+        $scope.remainingCount++;
         $scope.newTodo = '';
+    };
+
+    $scope.todoCompleted = function (todo) {
+        $scope.remainingCount += todo.completed ? -1 : 1;
+        todo.$save();
     };
 }

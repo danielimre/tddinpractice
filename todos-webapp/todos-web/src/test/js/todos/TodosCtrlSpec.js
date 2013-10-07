@@ -1,7 +1,7 @@
 (function() {
     describe('TodosCtrl', function() {
         var createController, $scope, $httpBackend,
-            INITIAL_TODO_LIST = [{id: 1, title: 'todo1'}, {id: 2, title: 'todo2'}];
+            INITIAL_TODO_LIST = [{id: 1, title: 'todo1', completed: false}, {id: 2, title: 'todo2', completed: false}];
 
         beforeEach(module('todosApp'));
         beforeEach(inject(function($controller, $rootScope, $injector) {
@@ -69,6 +69,35 @@
                     expect($scope.todos).toEqualData(INITIAL_TODO_LIST);
                 });
             });
-        })
+        });
+        describe('TodosCtrl.todoCompleted()', function() {
+            var ctrl;
+            beforeEach(function () {
+                $httpBackend.expectGET('/api/todo').respond(INITIAL_TODO_LIST);
+                ctrl = createController();
+                $httpBackend.flush();
+            });
+
+            describe("invoked with an incomplete todo", function() {
+                it("should increase remainingCount by one", function() {
+                    var todo = {completed: false, $save: angular.noop};
+                    spyOn(todo, '$save');
+                    $scope.remainingCount = 0;
+                    $scope.todoCompleted(todo);
+                    expect(todo.$save).toHaveBeenCalled();
+                    expect($scope.remainingCount).toEqual(1);
+                });
+            });
+            describe("invoked with a complete todo", function() {
+                it("should decrease remainingCount by one", function() {
+                    var todo = {completed: true, $save: angular.noop};
+                    spyOn(todo, '$save');
+                    $scope.remainingCount = 1;
+                    $scope.todoCompleted(todo);
+                    expect(todo.$save).toHaveBeenCalled();
+                    expect($scope.remainingCount).toEqual(0);
+                });
+            });
+        });
     });
 })();

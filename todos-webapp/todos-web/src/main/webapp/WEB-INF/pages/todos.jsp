@@ -18,7 +18,7 @@
     <section id="main">
       <ul id="todos-list">
         <li ng-repeat="todo in todos">
-          <input type="checkbox" ng-model="todo.completed">
+          <input type="checkbox" ng-model="todo.completed" ng-change="todoCompleted(todo)">
           {{todo.title}}
         </li>
       </ul>

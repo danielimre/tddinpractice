@@ -58,6 +58,16 @@ public class HibernateTodoDaoTest {
         verify(session).saveOrUpdate(todo);
     }
 
+    @Test
+    public void shouldDeleteAllTodos() {
+        Session session = mock(Session.class);
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        Query query = mock(Query.class);
+        when(session.createQuery("delete from Todo")).thenReturn(query);
+        dao.removeAll();
+        verify(query).executeUpdate();
+    }
+
     private Todo aTodo() {
         Todo todo = new Todo();
         todo.setId(1L);

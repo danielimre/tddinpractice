@@ -12,19 +12,21 @@ import com.company.todos.domain.Todo;
 public interface TodoService {
 
     /**
-     * Gets all stored todo entries.
+     * Gets all stored todo entries for a user.
+     * @param userName the username
      * @return stored todo entries
      */
-    List<Todo> getAll();
+    List<Todo> getAllTodosForUser(String userName);
 
     /**
      * Saves (updates or creates) the given todo entry.
      * @param todo entry to save
      */
-    void save(Todo todo);
+    void saveTodo(Todo todo);
 
     /**
-     * Removes all todos.
+     * Removes all todos for a given user.
+     * @param userName the username
      */
-    void removeAll();
+    void removeAllTodosForUser(String userName);
 }

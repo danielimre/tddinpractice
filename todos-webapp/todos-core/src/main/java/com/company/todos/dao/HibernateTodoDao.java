@@ -3,6 +3,7 @@ package com.company.todos.dao;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.classic.Session;
 
 import com.company.todos.domain.Todo;
 
@@ -18,20 +19,26 @@ public class HibernateTodoDao implements TodoDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Todo> getAll() {
-        return sessionFactory.getCurrentSession()
-                .createQuery("from Todo")
+    public List<Todo> getAllForUser(String userName) {
+        return getSession().createQuery("from Todo where userName = :userName")
+                .setParameter("userName", userName)
                 .list();
     }
 
     @Override
     public void save(Todo todo) {
-        sessionFactory.getCurrentSession().saveOrUpdate(todo);
+        getSession().saveOrUpdate(todo);
     }
 
     @Override
-    public void removeAll() {
-        sessionFactory.getCurrentSession().createQuery("delete from Todo").executeUpdate();
+    public void removeAllForUser(String userName) {
+        getSession().createQuery("delete from Todo where userName = :userName")
+            .setParameter("userName", userName)
+            .executeUpdate();
+    }
+
+    private Session getSession() {
+        return sessionFactory.getCurrentSession();
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {

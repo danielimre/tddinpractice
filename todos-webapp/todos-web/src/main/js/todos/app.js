@@ -1,7 +1,9 @@
 /*global angular, TodosCtrl */
 
-var todosApp = angular.module('todosApp', ['ngResource']);
+var todosApp = angular.module('todosApp', [ 'ngResource' ]);
 todosApp.controller('TodosCtrl', TodosCtrl);
-todosApp.factory('Todo', function ($resource) {
-    return $resource('/api/todo');
+todosApp.factory('Todo', function($resource, userName) {
+    return $resource('/api/todos/:userName/', {
+        userName : userName
+    });
 });

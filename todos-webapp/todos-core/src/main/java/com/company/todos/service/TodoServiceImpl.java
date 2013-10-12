@@ -18,20 +18,20 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Todo> getAll() {
-        return todoDao.getAll();
+    public List<Todo> getAllTodosForUser(String userName) {
+        return todoDao.getAllForUser(userName);
     }
 
     @Override
     @Transactional
-    public void save(Todo todo) {
+    public void saveTodo(Todo todo) {
         todoDao.save(todo);
     }
 
     @Override
     @Transactional
-    public void removeAll() {
-        todoDao.removeAll();
+    public void removeAllTodosForUser(String userName) {
+        todoDao.removeAllForUser(userName);
     }
 
     public void setTodoDao(TodoDao todoDao) {

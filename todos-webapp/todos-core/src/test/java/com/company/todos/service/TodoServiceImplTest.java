@@ -17,6 +17,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.company.todos.dao.TodoDao;
 import com.company.todos.domain.Todo;
+import com.company.todos.domain.Todo.TodoBuilder;
 
 /**
  * Unit test of {@link TodoServiceImpl}.
@@ -26,6 +27,7 @@ import com.company.todos.domain.Todo;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class TodoServiceImplTest {
+    private static final String USER_NAME = "user";
 
     @Mock
     private TodoDao todoDao;
@@ -39,30 +41,27 @@ public class TodoServiceImplTest {
     }
 
     @Test
-    public void testIfReturnsAllTodos() {
-        List<Todo> todos = Arrays.asList(todo(1L, "Milk"), todo(2L, "Sugar"));
-        when(todoDao.getAll()).thenReturn(todos);
-        List<Todo> result = todoServiceImpl.getAll();
+    public void testIfReturnsAllTodosForUser() {
+        List<Todo> todos = Arrays.asList(aTodo().withId(1L).withTitle("Milk").build(), aTodo().withId(2L).withTitle("Sugar").build());
+        when(todoDao.getAllForUser(USER_NAME)).thenReturn(todos);
+        List<Todo> result = todoServiceImpl.getAllTodosForUser(USER_NAME);
         assertThat(result, equalTo(todos));
     }
 
     @Test
     public void testThatDaoIsCalledWhenTodoGetsSaved() {
-        Todo todo = todo(1L, "Milk");
-        todoServiceImpl.save(todo);
+        Todo todo = aTodo().withId(1L).withTitle("Milk").build();
+        todoServiceImpl.saveTodo(todo);
         verify(todoDao).save(Mockito.eq(todo));
     }
 
     @Test
-    public void shouldRemoveAllTodos() {
-        todoServiceImpl.removeAll();
-        verify(todoDao).removeAll();
+    public void shouldRemoveAllTodosForUser() {
+        todoServiceImpl.removeAllTodosForUser(USER_NAME);
+        verify(todoDao).removeAllForUser(USER_NAME);
     }
 
-    private static Todo todo(Long id, String title) {
-        Todo todo = new Todo();
-        todo.setId(id);
-        todo.setTitle(title);
-        return todo;
+    private TodoBuilder aTodo() {
+        return new TodoBuilder();
     }
 }

@@ -4,6 +4,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.isEmptyString;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -66,6 +67,11 @@ public class UserSteps extends ScenarioSteps {
     @Step
     public void shouldSeeTodoInTodoList(String todoTextAdded) {
         assertThat(todosPage.getTodoTexts(), hasItem(todoTextAdded));
+    }
+
+    @Step
+    public void shouldNotSeeTodoInTodoList(String todoText) {
+        assertThat(todosPage.getTodoTexts(), not(hasItem(todoText)));
     }
 
     @Step

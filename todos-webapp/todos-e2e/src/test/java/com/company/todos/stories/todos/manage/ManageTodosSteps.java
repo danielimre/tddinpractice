@@ -26,6 +26,11 @@ public class ManageTodosSteps {
         contextSetup.clearTodosFor(userName);
     }
 
+    @Given("there are stored todo '$todoText' for user '$userName'")
+    public void thereAreStoredTodoForUser(String todoText, String userName) {
+        contextSetup.addTodoForUser(todoText, userName);
+    }
+
     @When("the user enters '$todoText' to new todo input field and hits Enter")
     public void theUserEntersTodoText(String todoText) {
         user.addsNewTodo(todoText);
@@ -34,6 +39,11 @@ public class ManageTodosSteps {
     @Then("they should see '$todoTextAdded' in the todos list")
     public void theyShouldSeeTodoTextAdded(String todoTextAdded) {
         user.shouldSeeTodoInTodoList(todoTextAdded);
+    }
+
+    @Then("they should not see '$todoText' in todos list")
+    public void theyShouldNotSeeTodoInTodosList(String todoText) {
+        user.shouldNotSeeTodoInTodoList(todoText);
     }
 
     @Then("they should see the new todo ('$todoTextAdded') be marked as incomplete")
@@ -62,12 +72,12 @@ public class ManageTodosSteps {
     }
 
     @Then("they should see empty todos list")
-    public void thenTheyShouldSeeEmptyTodosList() {
+    public void theyShouldSeeEmptyTodosList() {
         user.shouldSeeEmptyTodosList();
     }
 
     @Then("they should not see the footer")
-    public void thenTheyShouldNotSeeTheFooter() {
+    public void theyShouldNotSeeTheFooter() {
         user.shouldNotSeeFooter();
     }
 }

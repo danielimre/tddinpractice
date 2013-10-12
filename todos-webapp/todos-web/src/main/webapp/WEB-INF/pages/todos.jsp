@@ -34,5 +34,8 @@
   <script type="text/javascript" src="/assets/lib/angular/angular-resource.min.js"></script>
   <script type="text/javascript" src="/assets/js/todos/todos-ctrl.js"></script>
   <script type="text/javascript" src="/assets/js/todos/app.js"></script>
+  <script type="text/javascript">
+    todosApp.value('userName', '${username}');
+  </script>
 </body>
 </html>

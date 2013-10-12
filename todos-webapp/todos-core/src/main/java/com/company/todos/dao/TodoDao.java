@@ -13,10 +13,11 @@ import com.company.todos.domain.Todo;
 public interface TodoDao {
 
     /**
-     * Gets all todo entries.
+     * Gets all todo entries for a user.
+     * @param userName the username
      * @return list of todos
      */
-    List<Todo> getAll();
+    List<Todo> getAllForUser(String userName);
 
     /**
      * Saves a todo entry.
@@ -25,7 +26,8 @@ public interface TodoDao {
     void save(Todo todo);
 
     /**
-     * Removes all todos.
+     * Removes all todos for a specific user.
+     * @param userName the username
      */
-    void removeAll();
+    void removeAllForUser(String userName);
 }

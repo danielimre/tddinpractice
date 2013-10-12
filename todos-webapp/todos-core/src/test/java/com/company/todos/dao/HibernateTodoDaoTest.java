@@ -18,6 +18,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.company.todos.domain.Todo;
+import com.company.todos.domain.Todo.TodoBuilder;
 
 /**
  * Unit test for {@link HibernateTodoDao}.
@@ -27,6 +28,7 @@ import com.company.todos.domain.Todo;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class HibernateTodoDaoTest {
+    private static final String USER_NAME = "user";
     private final HibernateTodoDao dao = new HibernateTodoDao();
 
     @Mock
@@ -38,14 +40,16 @@ public class HibernateTodoDaoTest {
     }
 
     @Test
-    public void shouldReturnAllTodos() {
+    public void shouldReturnAllTodosForUser() {
         Session session = mock(Session.class);
         when(sessionFactory.getCurrentSession()).thenReturn(session);
         Query query = mock(Query.class);
-        when(session.createQuery("from Todo")).thenReturn(query);
-        List<Todo> todos = Arrays.asList(aTodo());
-        when(query.list()).thenReturn(todos);
-        List<Todo> result = dao.getAll();
+        when(session.createQuery("from Todo where userName = :userName")).thenReturn(query);
+        Query query2 = mock(Query.class);
+        when(query.setParameter("userName", USER_NAME)).thenReturn(query2);
+        List<Todo> todos = Arrays.asList(aTodo().build());
+        when(query2.list()).thenReturn(todos);
+        List<Todo> result = dao.getAllForUser(USER_NAME);
         assertEquals(todos, result);
     }
 
@@ -53,26 +57,25 @@ public class HibernateTodoDaoTest {
     public void shouldSaveOrUpdateOnSave() {
         Session session = mock(Session.class);
         when(sessionFactory.getCurrentSession()).thenReturn(session);
-        Todo todo = aTodo();
+        Todo todo = aTodo().build();
         dao.save(todo);
         verify(session).saveOrUpdate(todo);
     }
 
     @Test
-    public void shouldDeleteAllTodos() {
+    public void shouldDeleteAllTodosForUser() {
         Session session = mock(Session.class);
         when(sessionFactory.getCurrentSession()).thenReturn(session);
         Query query = mock(Query.class);
-        when(session.createQuery("delete from Todo")).thenReturn(query);
-        dao.removeAll();
-        verify(query).executeUpdate();
+        when(session.createQuery("delete from Todo where userName = :userName")).thenReturn(query);
+        Query query2 = mock(Query.class);
+        when(query.setParameter("userName", USER_NAME)).thenReturn(query2);
+        dao.removeAllForUser(USER_NAME);
+        verify(query2).executeUpdate();
     }
 
-    private Todo aTodo() {
-        Todo todo = new Todo();
-        todo.setId(1L);
-        todo.setTitle("some title");
-        return todo;
+    private TodoBuilder aTodo() {
+        return new TodoBuilder();
     }
 
 }

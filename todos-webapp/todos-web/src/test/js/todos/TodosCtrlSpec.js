@@ -4,6 +4,9 @@
             INITIAL_TODO_LIST = [{id: 1, title: 'todo1', completed: false}, {id: 2, title: 'todo2', completed: false}];
 
         beforeEach(module('todosApp'));
+        beforeEach(function() {
+            todosApp.value('userName', 'testuser');
+        });
         beforeEach(inject(function($controller, $rootScope, $injector) {
             $scope = $rootScope.$new();
             $httpBackend = $injector.get('$httpBackend'); //got through the $injector to avoid name collision
@@ -26,7 +29,7 @@
 
         it('should query todos', inject(function($httpBackend) {
             var ctrl;
-            $httpBackend.expectGET('/api/todo').respond(INITIAL_TODO_LIST);
+            $httpBackend.expectGET('/api/todos/testuser').respond(INITIAL_TODO_LIST);
             ctrl = createController();
             $httpBackend.flush();
             expect($scope.todos).toEqualData(INITIAL_TODO_LIST);
@@ -35,7 +38,7 @@
         describe('TodosCtrl.addTodo()', function() {
             var ctrl;
             beforeEach(function () {
-                $httpBackend.expectGET('/api/todo').respond(INITIAL_TODO_LIST);
+                $httpBackend.expectGET('/api/todos/testuser').respond(INITIAL_TODO_LIST);
                 ctrl = createController();
                 $httpBackend.flush();
             });
@@ -45,7 +48,7 @@
 
                 beforeEach(function () {
                     $scope.newTodo = "some";
-                    $httpBackend.expectPOST('/api/todo', {title: "some"}).respond(NEW_ITEM);
+                    $httpBackend.expectPOST('/api/todos/testuser', {title: "some"}).respond(NEW_ITEM);
                     $scope.addTodo();
                     $httpBackend.flush();
                 });
@@ -73,7 +76,7 @@
         describe('TodosCtrl.todoCompleted()', function() {
             var ctrl;
             beforeEach(function () {
-                $httpBackend.expectGET('/api/todo').respond(INITIAL_TODO_LIST);
+                $httpBackend.expectGET('/api/todos/testuser').respond(INITIAL_TODO_LIST);
                 ctrl = createController();
                 $httpBackend.flush();
             });

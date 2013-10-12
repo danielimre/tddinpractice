@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,7 +20,7 @@ import com.company.todos.service.TodoService;
  *
  */
 @Controller
-@RequestMapping("/api/todo")
+@RequestMapping("/api/todos/{userName}")
 public class TodoRestController {
 
     @Autowired
@@ -27,14 +28,15 @@ public class TodoRestController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public List<Todo> getAll() {
-        return todoService.getAll();
+    public List<Todo> getAllForUser(@PathVariable String userName) {
+        return todoService.getAllTodosForUser(userName);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public Todo save(@RequestBody Todo todo) {
-        todoService.save(todo);
+    public Todo saveTodoForUser(@RequestBody Todo todo, @PathVariable String userName) {
+        todo.setUserName(userName);
+        todoService.saveTodo(todo);
         return todo;
     }
 

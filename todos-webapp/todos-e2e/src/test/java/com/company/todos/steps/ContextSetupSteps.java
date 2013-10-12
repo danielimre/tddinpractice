@@ -27,4 +27,14 @@ public class ContextSetupSteps extends ScenarioSteps {
         adminPage.purgeTodosFor(userName);
     }
 
+    /**
+     * Calls backend directly to add a todo for a specific user.
+     * @param todoText the todo text to add
+     * @param userName the user's name
+     */
+    @Step
+    public void addTodoForUser(String todoText, String userName) {
+        adminPage.addTodoForUser(todoText, userName);
+    }
+
 }

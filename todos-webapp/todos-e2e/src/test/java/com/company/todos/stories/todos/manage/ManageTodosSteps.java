@@ -80,4 +80,9 @@ public class ManageTodosSteps {
     public void theyShouldNotSeeTheFooter() {
         user.shouldNotSeeFooter();
     }
+
+    @When("the user modifies '$todoText' to '$updatedText'")
+    public void userModifiedTodoText(String todoText, String updatedText) {
+        user.modifyTodo(todoText, updatedText);
+    }
 }

@@ -13,6 +13,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import ch.lambdaj.function.matcher.Predicate;
@@ -129,17 +130,43 @@ public class TodosPage extends PageObject {
         getTodosInList().get(todoNumber - 1).findElement(By.cssSelector("input[type=checkbox]")).click();
     }
 
+    /**
+     * Modifies a todo located by its text.
+     *
+     * @param todoText the current text
+     * @param updatedText the updated text
+     */
+    public void modifyTodo(String todoText, String updatedText) {
+        WebElement todo = getTodoWithText(todoText);
+        doubleClickElement(todo.findElement(By.cssSelector("label")));
+        WebElement todoInput = todo.findElement(By.cssSelector("form input"));
+        todoInput.clear();
+        todoInput.sendKeys(updatedText);
+        todoInput.sendKeys(Keys.ENTER);
+    }
+
     private List<WebElement> getTodosInList() {
         return todosList.findElements(By.cssSelector("li"));
     }
 
-    private WebElement getTodoWithText(final String todoTextAdded) {
+    /**
+     * Gets the first todo with text.
+     * @param todoText the todo's text
+     * @return the first todo with the specified text
+     */
+    private WebElement getTodoWithText(final String todoText) {
         return selectFirst(getTodosInList(), new Predicate<WebElement>() {
             @Override
             public boolean apply(WebElement item) {
-                return todoTextAdded.equals(item.getText());
+                return todoText.equals(item.getText());
             }
         });
+    }
+
+    private void doubleClickElement(WebElement element) {
+        Actions action = new Actions(getDriver());
+        action.doubleClick(element);
+        action.perform();
     }
 
 }

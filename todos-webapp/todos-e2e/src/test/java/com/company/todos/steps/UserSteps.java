@@ -103,4 +103,9 @@ public class UserSteps extends ScenarioSteps {
     public void clicksStateCheckBox(Integer todoNumber) {
         todosPage.clickStateCheckbox(todoNumber);
     }
+
+    @Step
+    public void modifyTodo(String todoText, String updatedText) {
+        todosPage.modifyTodo(todoText, updatedText);
+    }
 }

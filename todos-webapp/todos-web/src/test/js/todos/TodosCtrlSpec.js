@@ -134,5 +134,28 @@
                 expect(todo.$save).toHaveBeenCalled();
             });
         });
+        describe('TodosCtrl.removeTodo()', function() {
+            var ctrl;
+            beforeEach(function () {
+                $httpBackend.expectGET('/api/todos/testuser').respond(INITIAL_TODO_LIST);
+                ctrl = createController();
+                $httpBackend.flush();
+            });
+
+            describe("invoked with todo", function() {
+                beforeEach(function () {
+                    $httpBackend.expectDELETE('/api/todos/testuser/1').respond("ok");
+                    $scope.removeTodo($scope.todos[0]);
+                    $httpBackend.flush();
+                });
+                it("should remove it from todos", function() {
+                    var expectedItems = [INITIAL_TODO_LIST[1]];
+                    expect($scope.todos).toEqualData(expectedItems);
+                });
+                it("should decrease remainingCount by 1", function() {
+                    expect($scope.remainingCount).toEqual(1);
+                });
+            });
+        });
     });
 })();

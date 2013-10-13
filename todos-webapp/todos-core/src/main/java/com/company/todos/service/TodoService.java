@@ -29,4 +29,12 @@ public interface TodoService {
      * @param userName the username
      */
     void removeAllTodosForUser(String userName);
+
+    /**
+     * Deletes a todo by id if it's the given user's.
+     * @param todoId the todo's id to remove
+     * @param userName the username
+     * @return true if succeeded, otherwise false
+     */
+    boolean deleteTodoById(Long todoId, String userName);
 }

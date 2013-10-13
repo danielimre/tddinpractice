@@ -20,6 +20,7 @@
         <li ng-repeat="todo in todos">
           <input type="checkbox" ng-model="todo.completed" ng-change="todoCompleted(todo)">
           <label ng-dblclick="editTodo(todo)" ng-hide="todo == editedTodo">{{todo.title}}</label>
+          <button ng-click="removeTodo(todo)">X</button>
           <form ng-submit="doneEditing(todo)" ng-show="todo == editedTodo">
             <input ng-model="todo.title">
           </form>

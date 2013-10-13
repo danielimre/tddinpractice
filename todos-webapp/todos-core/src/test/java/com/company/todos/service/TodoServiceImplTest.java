@@ -1,7 +1,10 @@
 package com.company.todos.service;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -28,6 +31,7 @@ import com.company.todos.domain.Todo.TodoBuilder;
 @RunWith(MockitoJUnitRunner.class)
 public class TodoServiceImplTest {
     private static final String USER_NAME = "user";
+    private static final Long TODO_ID = 1L;
 
     @Mock
     private TodoDao todoDao;
@@ -59,6 +63,22 @@ public class TodoServiceImplTest {
     public void shouldRemoveAllTodosForUser() {
         todoServiceImpl.removeAllTodosForUser(USER_NAME);
         verify(todoDao).removeAllForUser(USER_NAME);
+    }
+
+    @Test
+    public void shouldRemoveTodoByIdIfUsernameMatches() {
+        Todo todo = aTodo().forUser(USER_NAME).withId(TODO_ID).build();
+        when(todoDao.getById(TODO_ID)).thenReturn(todo);
+        assertTrue(todoServiceImpl.deleteTodoById(TODO_ID, USER_NAME));
+        verify(todoDao).delete(todo);
+    }
+
+    @Test
+    public void shouldNotRemoveTodoByIdIfUsernameDiffers() {
+        Todo todo = aTodo().forUser("otheruser").withId(TODO_ID).build();
+        when(todoDao.getById(TODO_ID)).thenReturn(todo);
+        assertFalse(todoServiceImpl.deleteTodoById(TODO_ID, USER_NAME));
+        verify(todoDao, never()).delete(todo);
     }
 
     private TodoBuilder aTodo() {

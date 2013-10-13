@@ -30,4 +30,18 @@ public interface TodoDao {
      * @param userName the username
      */
     void removeAllForUser(String userName);
+
+    /**
+     * Gets a todo by id.
+     * @param todoId the todo's id
+     * @return the fetched todo if exists, otherwise null
+     */
+    Todo getById(long todoId);
+
+    /**
+     * Deletes a todo.
+     * @param todo the todo to remove
+     */
+    void delete(Todo todo);
+
 }

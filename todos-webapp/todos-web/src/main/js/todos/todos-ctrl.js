@@ -44,4 +44,11 @@ function TodosCtrl($scope, Todo) {
         todo.title = todo.title.trim();
         todo.$save();
     };
+
+    $scope.removeTodo = function (todo) {
+        $scope.remainingCount -= todo.completed ? 0 : 1;
+        $scope.todos.splice($scope.todos.indexOf(todo), 1);
+        todo.$delete();
+    };
+
 }

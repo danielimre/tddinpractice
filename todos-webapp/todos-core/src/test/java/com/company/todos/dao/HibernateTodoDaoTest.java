@@ -1,6 +1,7 @@
 package com.company.todos.dao;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -29,6 +30,7 @@ import com.company.todos.domain.Todo.TodoBuilder;
 @RunWith(MockitoJUnitRunner.class)
 public class HibernateTodoDaoTest {
     private static final String USER_NAME = "user";
+    private static final long TODO_ID = 1L;
     private final HibernateTodoDao dao = new HibernateTodoDao();
 
     @Mock
@@ -41,8 +43,7 @@ public class HibernateTodoDaoTest {
 
     @Test
     public void shouldReturnAllTodosForUser() {
-        Session session = mock(Session.class);
-        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        Session session = stubSession();
         Query query = mock(Query.class);
         when(session.createQuery("from Todo where userName = :userName")).thenReturn(query);
         Query query2 = mock(Query.class);
@@ -55,8 +56,7 @@ public class HibernateTodoDaoTest {
 
     @Test
     public void shouldSaveOrUpdateOnSave() {
-        Session session = mock(Session.class);
-        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        Session session = stubSession();
         Todo todo = aTodo().build();
         dao.save(todo);
         verify(session).saveOrUpdate(todo);
@@ -64,14 +64,36 @@ public class HibernateTodoDaoTest {
 
     @Test
     public void shouldDeleteAllTodosForUser() {
-        Session session = mock(Session.class);
-        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        Session session = stubSession();
         Query query = mock(Query.class);
         when(session.createQuery("delete from Todo where userName = :userName")).thenReturn(query);
         Query query2 = mock(Query.class);
         when(query.setParameter("userName", USER_NAME)).thenReturn(query2);
         dao.removeAllForUser(USER_NAME);
         verify(query2).executeUpdate();
+    }
+
+    @Test
+    public void shouldDeleteTodo() {
+        Session session = stubSession();
+        Todo todo = aTodo().build();
+        dao.delete(todo);
+        verify(session).delete(todo);
+    }
+
+    @Test
+    public void shouldGetTodoById() {
+        Session session = stubSession();
+        Todo todo = aTodo().build();
+        when(session.get(Todo.class, TODO_ID)).thenReturn(todo);
+        Todo todoRetrieved = dao.getById(TODO_ID);
+        assertSame(todo, todoRetrieved);
+    }
+
+    private Session stubSession() {
+        Session session = mock(Session.class);
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        return session;
     }
 
     private TodoBuilder aTodo() {

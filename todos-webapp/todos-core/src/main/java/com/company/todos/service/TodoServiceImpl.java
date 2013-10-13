@@ -34,6 +34,18 @@ public class TodoServiceImpl implements TodoService {
         todoDao.removeAllForUser(userName);
     }
 
+    @Override
+    @Transactional
+    public boolean deleteTodoById(Long todoId, String userName) {
+        boolean result = false;
+        Todo todo = todoDao.getById(todoId);
+        if (userName.equals(todo.getUserName())) {
+            todoDao.delete(todo);
+            result = true;
+        }
+        return result;
+    }
+
     public void setTodoDao(TodoDao todoDao) {
         this.todoDao = todoDao;
     }

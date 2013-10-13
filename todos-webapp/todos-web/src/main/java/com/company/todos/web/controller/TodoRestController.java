@@ -20,27 +20,44 @@ import com.company.todos.service.TodoService;
  *
  */
 @Controller
-@RequestMapping("/api/todos/{userName}")
 public class TodoRestController {
 
     @Autowired
     private TodoService todoService;
 
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/api/todos/{userName}", method = RequestMethod.GET)
     @ResponseBody
     public List<Todo> getAllForUser(@PathVariable String userName) {
         return todoService.getAllTodosForUser(userName);
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @RequestMapping(value = "/api/todos/{userName}", method = RequestMethod.POST)
     @ResponseBody
-    public Todo saveTodoForUser(@RequestBody Todo todo, @PathVariable String userName) {
+    public Todo createTodoForUser(@RequestBody Todo todo, @PathVariable String userName) {
         todo.setUserName(userName);
         todoService.saveTodo(todo);
         return todo;
     }
 
+    @RequestMapping(value = "/api/todos/{userName}/{todoId}", method = RequestMethod.POST)
+    @ResponseBody
+    public Todo updateTodoOfUser(@RequestBody Todo todo, @PathVariable Long todoId, @PathVariable String userName) {
+        todo.setUserName(userName);
+        todo.setId(todoId);
+        todoService.saveTodo(todo);
+        return todo;
+    }
+
+    @RequestMapping(value = "/api/todos/{userName}/{todoId}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public void deleteTodo(@PathVariable Long todoId, @PathVariable String userName) {
+        if (!todoService.deleteTodoById(todoId, userName)) {
+            throw new IllegalArgumentException();
+        }
+    }
+
     public void setTodoService(TodoService todoService) {
         this.todoService = todoService;
     }
+
 }

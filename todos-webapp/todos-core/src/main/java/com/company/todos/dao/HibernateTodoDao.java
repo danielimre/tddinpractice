@@ -20,9 +20,7 @@ public class HibernateTodoDao implements TodoDao {
     @SuppressWarnings("unchecked")
     @Override
     public List<Todo> getAllForUser(String userName) {
-        return getSession().createQuery("from Todo where userName = :userName")
-                .setParameter("userName", userName)
-                .list();
+        return getSession().createQuery("from Todo where userName = :userName").setParameter("userName", userName).list();
     }
 
     @Override
@@ -32,9 +30,17 @@ public class HibernateTodoDao implements TodoDao {
 
     @Override
     public void removeAllForUser(String userName) {
-        getSession().createQuery("delete from Todo where userName = :userName")
-            .setParameter("userName", userName)
-            .executeUpdate();
+        getSession().createQuery("delete from Todo where userName = :userName").setParameter("userName", userName).executeUpdate();
+    }
+
+    @Override
+    public void delete(Todo todo) {
+        getSession().delete(todo);
+    }
+
+    @Override
+    public Todo getById(long todoId) {
+        return (Todo) getSession().get(Todo.class, todoId);
     }
 
     private Session getSession() {

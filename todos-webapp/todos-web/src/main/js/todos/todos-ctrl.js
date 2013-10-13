@@ -34,4 +34,14 @@ function TodosCtrl($scope, Todo) {
         $scope.remainingCount += todo.completed ? -1 : 1;
         todo.$save();
     };
+    
+    $scope.editTodo = function (todo) {
+        $scope.editedTodo = todo;
+    };
+
+    $scope.doneEditing = function (todo) {
+        $scope.editedTodo = null;
+        todo.title = todo.title.trim();
+        todo.$save();
+    };
 }

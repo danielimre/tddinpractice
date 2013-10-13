@@ -19,7 +19,10 @@
       <ul id="todos-list">
         <li ng-repeat="todo in todos">
           <input type="checkbox" ng-model="todo.completed" ng-change="todoCompleted(todo)">
-          {{todo.title}}
+          <label ng-dblclick="editTodo(todo)" ng-hide="todo == editedTodo">{{todo.title}}</label>
+          <form ng-submit="doneEditing(todo)" ng-show="todo == editedTodo">
+            <input ng-model="todo.title">
+          </form>
         </li>
       </ul>
     </section>

@@ -102,5 +102,37 @@
                 });
             });
         });
+        describe('TodosCtrl.editTodo()', function() {
+            var ctrl;
+            beforeEach(function () {
+                $httpBackend.expectGET('/api/todos/testuser').respond(INITIAL_TODO_LIST);
+                ctrl = createController();
+                $httpBackend.flush();
+            });
+
+            it("should set the editedTodo to todo", function() {
+                var todo = {title: "something"};
+                $scope.editTodo(todo);
+                expect($scope.editedTodo).toEqual(todo);
+            });
+        });
+        describe('TodosCtrl.doneEditing()', function() {
+            var ctrl;
+            beforeEach(function () {
+                $httpBackend.expectGET('/api/todos/testuser').respond(INITIAL_TODO_LIST);
+                ctrl = createController();
+                $httpBackend.flush();
+            });
+
+            it("should set the editedTodo to null and save the todo with trimmed title", function() {
+                var todo = {title: "something ", $save: angular.noop};
+                spyOn(todo, '$save');
+                $scope.editedTodo = todo;
+                $scope.doneEditing(todo);
+                expect($scope.editedTodo).toBe(null);
+                expect(todo.title).toEqual("something");
+                expect(todo.$save).toHaveBeenCalled();
+            });
+        });
     });
 })();

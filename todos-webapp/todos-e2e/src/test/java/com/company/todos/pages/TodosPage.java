@@ -81,7 +81,7 @@ public class TodosPage extends PageObject {
      * @return collection of todo texts
      */
     public List<String> getTodoTexts() {
-        return extract(getTodosInList(), on(WebElement.class).getText());
+        return extract(getTodosInList(), on(WebElement.class).findElement(By.tagName("label")).getText());
     }
 
     /**
@@ -145,12 +145,22 @@ public class TodosPage extends PageObject {
         todoInput.sendKeys(Keys.ENTER);
     }
 
+    /**
+     * Deletes a todo located by its text.
+     * @param todoText the todo's title
+     */
+    public void deleteTodo(String todoText) {
+        WebElement todo = getTodoWithText(todoText);
+        todo.findElement(By.cssSelector("button")).click();
+    }
+
     private List<WebElement> getTodosInList() {
         return todosList.findElements(By.cssSelector("li"));
     }
 
     /**
      * Gets the first todo with text.
+     *
      * @param todoText the todo's text
      * @return the first todo with the specified text
      */
@@ -158,7 +168,7 @@ public class TodosPage extends PageObject {
         return selectFirst(getTodosInList(), new Predicate<WebElement>() {
             @Override
             public boolean apply(WebElement item) {
-                return todoText.equals(item.getText());
+                return todoText.equals(item.findElement(By.tagName("label")).getText());
             }
         });
     }

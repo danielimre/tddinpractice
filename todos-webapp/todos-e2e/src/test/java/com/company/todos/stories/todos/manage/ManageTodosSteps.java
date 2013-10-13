@@ -31,6 +31,14 @@ public class ManageTodosSteps {
         contextSetup.addTodoForUser(todoText, userName);
     }
 
+    @Given("there are stored todos for '$userName': '$todos'")
+    public void thereAreStoredTodosForUser(String userName, String todos) {
+        thereAreNoStoredTodosFor(userName);
+        for (String todo : todos.split("\\|")) {
+            thereAreStoredTodoForUser(todo, userName);
+        }
+    }
+
     @When("the user enters '$todoText' to new todo input field and hits Enter")
     public void theUserEntersTodoText(String todoText) {
         user.addsNewTodo(todoText);
@@ -82,7 +90,12 @@ public class ManageTodosSteps {
     }
 
     @When("the user modifies '$todoText' to '$updatedText'")
-    public void userModifiedTodoText(String todoText, String updatedText) {
-        user.modifyTodo(todoText, updatedText);
+    public void userModifiesTodoText(String todoText, String updatedText) {
+        user.modifiesTodo(todoText, updatedText);
+    }
+
+    @When("the user deletes todo '$todoText'")
+    public void userDeletesTodo(String todoText) {
+        user.deletesTodo(todoText);
     }
 }

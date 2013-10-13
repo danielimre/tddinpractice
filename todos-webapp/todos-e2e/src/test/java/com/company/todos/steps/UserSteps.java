@@ -105,7 +105,12 @@ public class UserSteps extends ScenarioSteps {
     }
 
     @Step
-    public void modifyTodo(String todoText, String updatedText) {
+    public void modifiesTodo(String todoText, String updatedText) {
         todosPage.modifyTodo(todoText, updatedText);
+    }
+
+    @Step
+    public void deletesTodo(String todoText) {
+        todosPage.deleteTodo(todoText);
     }
 }

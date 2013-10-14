@@ -1,0 +1,30 @@
+body {
+  background-color: #eeeeee;
+}
+
+h1 small {
+  font-size: 80%;
+}
+
+#main label {
+  display: block;
+  margin: 3px 16px 3px 0;
+}
+
+#main .close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+#main .input-group {
+  margin-bottom: 4px;
+}
+
+#main form.form-control {
+  padding: 0;
+}
+
+#main input.form-control {
+  height: 38px;
+}

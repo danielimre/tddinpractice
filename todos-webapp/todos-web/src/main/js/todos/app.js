@@ -1,18 +1,6 @@
-/*global angular, TodosCtrl */
+/*global angular */
 
-var todosApp = angular.module('todosApp', [ 'ngResource' ]);
-todosApp.controller('TodosCtrl', TodosCtrl);
-todosApp.factory('Todo', function($resource, userName) {
-    return $resource('/api/todos/:userName/:id', {
-        userName : userName,
-        id: '@id'
-    }, {
-        list : {
-            method : 'GET',
-            params : {
-                todoId : ''
-            },
-            isArray : true
-        }
-    });
-});
+var todosApp = angular.module('todosApp', [ 'ngResource', 'todosApp-core', 'todosApp-services', 'todosApp-directives' ]);
+angular.module("todosApp-core", []);
+angular.module("todosApp-services", []);
+angular.module("todosApp-directives", []);

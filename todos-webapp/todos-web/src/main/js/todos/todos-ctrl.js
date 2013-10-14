@@ -1,9 +1,10 @@
 /*global angular*/
+(function() {
 /**
  * Controller for todos page.
  * @param $scope the scope of the controller
  */
-function TodosCtrl($scope, Todo) {
+angular.module('todosApp-core').controller('TodosCtrl', function TodosCtrl($scope, Todo) {
     "use strict";
     function updateRemainingCount() {
         var rc = 0;
@@ -34,7 +35,7 @@ function TodosCtrl($scope, Todo) {
         $scope.remainingCount += todo.completed ? -1 : 1;
         todo.$save();
     };
-    
+
     $scope.editTodo = function (todo) {
         $scope.editedTodo = todo;
     };
@@ -50,5 +51,5 @@ function TodosCtrl($scope, Todo) {
         $scope.todos.splice($scope.todos.indexOf(todo), 1);
         todo.$delete();
     };
-
-}
+});
+}());
